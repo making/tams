@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import am.ik.tams.common.uuid.UuidGenerator;
 import am.ik.tams.domain.model.Account;
-import am.ik.tams.domain.model.Credentials;
 import am.ik.tams.domain.repository.account.AccountRepository;
 
 @Service
@@ -37,9 +36,7 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountId(accountId);
         account.setCreatedAt(now.toDate());
         account.setUpdatedAt(now.toDate());
-        Credentials credentials = account.getCredentials();
-        credentials.setCreatedAt(now.toDate());
-        credentials.setUpdatedAt(now.toDate());
+        account.setPasswordUpdatedAt(now.toDate());
         accountRepository.save(account);
         return account;
     }

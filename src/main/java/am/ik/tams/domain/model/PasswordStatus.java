@@ -1,5 +1,5 @@
 package am.ik.tams.domain.model;
 
-public enum CredentialsStatus {
+public enum PasswordStatus {
     ACTIVATED, EXPIRED, LOCKED
 }

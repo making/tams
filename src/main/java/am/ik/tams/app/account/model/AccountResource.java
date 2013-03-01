@@ -4,7 +4,13 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import am.ik.tams.common.json.DateDeserializer;
+import am.ik.tams.common.json.DateSerializer;
 import am.ik.tams.domain.model.AccountStatus;
+import am.ik.tams.domain.model.PasswordStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,14 +32,26 @@ public class AccountResource implements Serializable {
 
     private String lastName;
 
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonDeserialize(using = DateDeserializer.class)
     private Date birthDate;
 
-    private AccountStatus status;
+    private AccountStatus accountStatus;
 
-    private CredentialsResource credentials;
+    private String userId;
+
+    private String email;
+
+    private String password;
+
+    private PasswordStatus passwordStatus;
+
+    private Date passwordLockedAt;
+
+    private Date passwordUpdatedAt;
 
     private Collection<String> roles;
-    
+
     private Date createdAt;
 
     private Date updatedAt;

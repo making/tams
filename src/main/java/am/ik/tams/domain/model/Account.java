@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -48,10 +46,28 @@ public class Account implements Serializable {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private AccountStatus status;
+    private AccountStatus accountStatus;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Credentials credentials;
+    @Column(length = 128)
+    private String userId;
+
+    @Column(length = 128, unique = true, nullable = false)
+    private String email;
+
+    @Column(length = 256)
+    private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PasswordStatus passwordStatus;
+
+    @Column(nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date passwordLockedAt;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date passwordUpdatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;

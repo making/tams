@@ -9,6 +9,14 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+        <property name="dateFormat">
+            <bean class="java.text.SimpleDateFormat">
+                <constructor-arg type="java.lang.String"
+                    value="yyyy-MM-dd'T'hh:mm:ss.SSSZ" />
+            </bean>
+        </property>
+    </bean>
 
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
@@ -16,6 +24,13 @@
                 class="org.springframework.data.web.PageableArgumentResolver">
             </bean>
         </mvc:argument-resolvers>
+        <mvc:message-converters
+            register-defaults="false">
+            <bean
+                class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper" />
+            </bean>
+        </mvc:message-converters>
     </mvc:annotation-driven>
 
 
@@ -68,7 +83,8 @@
             <map>
             </map>
         </property>
-        <property name="warnLogCategory" value="am.ik.tams.SimpleMappingExceptionResolver" />
+        <property name="warnLogCategory"
+            value="am.ik.tams.SimpleMappingExceptionResolver" />
         <property name="defaultStatusCode" value="500" />
         <property name="defaultErrorView" value="systemError" />
     </bean>
